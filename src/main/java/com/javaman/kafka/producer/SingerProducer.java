@@ -21,11 +21,11 @@ public class SingerProducer {
     /**
      * 主题名称
      */
-    private static final String TOPIC = "stock-quotation";
+    private static final String TOPIC = "stock";
     /**
      * kafka集群
      */
-    private static final String BROKER_LIST = "119.23.236.253:9092";
+    private static final String BROKER_LIST = "10.60.96.142:9092";
 
     private static KafkaProducer<String, String> producer = null;
 
@@ -51,7 +51,7 @@ public class SingerProducer {
         return properties;
     }
 
-    private static StockQuotationInfo createQuotationInfo() {
+    public static StockQuotationInfo createQuotationInfo() {
         StockQuotationInfo quotationInfo = new StockQuotationInfo();
         //随机产生1到10的整数,然后与600100相加组成股票代码
         Random r = new Random();
