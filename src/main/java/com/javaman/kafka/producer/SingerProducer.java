@@ -90,7 +90,7 @@ public class SingerProducer {
                         quotationInfo.getTradeTime(), quotationInfo.getStockCode(),
                         quotationInfo.toString());
                 //异步发送消息
-                producer.send(record, new Callback() {
+                producer.send(record,   new Callback() {
                     public void onCompletion(RecordMetadata metadata, Exception exception) {
                         if (exception != null) {
                             //发送异常记录异常信息
