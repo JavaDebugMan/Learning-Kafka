@@ -25,7 +25,7 @@ public class ProducerClient {
     /**
      * kafka集群
      */
-    private static final String BROKER = "172.16.115.130:9092";
+    private static final String BROKER = "10.60.96.142:9092";
 
     private static KafkaProducer<String, String> producer = null;
 
@@ -48,7 +48,7 @@ public class ProducerClient {
         //设置序列化
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        properties.put("acks", "all");
+        properties.put(ProducerConfig.ACKS_CONFIG, "all");
         return properties;
     }
 
