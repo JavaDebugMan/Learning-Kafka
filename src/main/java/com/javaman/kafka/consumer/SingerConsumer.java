@@ -16,21 +16,21 @@ public class SingerConsumer {
     public static void main(String[] args) {
 
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "10,60.96.142");
+        properties.put("bootstrap.servers", "10.60.96.142:9092");
         properties.put("group.id", "test");
         properties.put("client.id", "test");
         properties.put("fetch.max.bytes", 1024);
         properties.put("enable.auto.commit", false);
-        properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer(properties);
 
-        consumer.subscribe(Arrays.asList("stock"));
+        consumer.subscribe(Arrays.asList("test"));
 
         try {
             //至少处理10条消息才提交Offset
-            int minCommitSize = 10;
+            int minCommitSize = 2;
             int icount = 0;
             while (true) {
                 //等待拉取消息
