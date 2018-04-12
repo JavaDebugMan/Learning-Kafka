@@ -1,13 +1,9 @@
 package com.javaman.kafka.producer;
 
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
+import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
@@ -48,18 +44,18 @@ public class ProducerClient {
         //设置序列化
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        properties.put(ProducerConfig.ACKS_CONFIG, "0");
+        properties.put(ProducerConfig.ACKS_CONFIG, "all");
         return properties;
     }
 
     public static void main(String[] args) {
         try {
             for (int i = 0; i < 10; i++) {
-                ProducerRecord<String, String> record = new ProducerRecord<String, String>(
-                        TOPIC, String.valueOf(i));
+                ProducerRecord<String, String> record = new ProducerRecord<String, String>
+                        (TOPIC, "消息的key" + String.valueOf(i), "消息的value" + String.valueOf(i));
                 Future<RecordMetadata> send = producer.send(record);
                 RecordMetadata recordMetadata = send.get();
-                System.out.println(recordMetadata);
+                System.out.println("此消息的Offset:::" + recordMetadata.offset() + "======此消息所发送的分区:::" + recordMetadata.partition());
             }
 
         } catch (Exception e) {
