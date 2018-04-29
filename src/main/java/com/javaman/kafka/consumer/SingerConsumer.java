@@ -15,22 +15,34 @@ public class SingerConsumer {
 
     public static void main(String[] args) {
 
-        Properties properties = new Properties();
-        properties.put("bootstrap.servers", "10.60.96.142:9092");
-        properties.put("group.id", "test");
-        properties.put("client.id", "test");
-        properties.put("fetch.max.bytes", 1024);
-        properties.put("enable.auto.commit", false);
-        properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        Properties props = new Properties();
+        // properties.put("bootstrap.servers", "10.60.196.60:9092,10.60.196.64:9092,10.60.196.65:9092");
+        // properties.put("group.id", "test");
+        // properties.put("client.id", "test");
+        // properties.put("fetch.max.bytes", 1024);
+        //properties.put("enable.auto.commit", false);
+        //properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        // properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
-        KafkaConsumer<String, String> consumer = new KafkaConsumer(properties);
+
+       // props.put("bootstrap.servers", "10.60.196.60:9092,10.60.196.64:9092,10.60.196.65:9092");
+        props.put("bootstrap.servers", "10.60.196.225:9092,10.60.196.226:9092,10.60.196.227:9092");
+        props.put("group.id", "test-consumer-group");
+        props.put("auto.commit.timeout.interval.ms", 1000);
+        props.put("session.timeout.ms", 30000);
+        props.put("max.poll.records", 2000);
+        props.put("enable.auto.commit", "false");//取消自动提交
+      //  props.put("auto.offset.reset", "latest");//最新消息消费
+        props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+
+        KafkaConsumer<String, String> consumer = new KafkaConsumer(props);
 
         consumer.subscribe(Arrays.asList("test"));
 
         try {
             //至少处理10条消息才提交Offset
-            int minCommitSize = 2;
+            int minCommitSize = 1;
             int icount = 0;
             while (true) {
                 //等待拉取消息

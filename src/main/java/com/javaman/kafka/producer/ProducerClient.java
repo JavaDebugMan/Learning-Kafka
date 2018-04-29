@@ -21,7 +21,8 @@ public class ProducerClient {
     /**
      * kafka集群
      */
-    private static final String BROKER = "10.60.96.142:9092";
+    // private static final String BROKER = "10.60.196.60:9092,10.60.196.64:9092,10.60.196.65:9092";
+    private static final String BROKER = "10.60.196.225:9092,10.60.196.226:9092,10.60.196.227:9092";
 
     private static KafkaProducer<String, String> producer = null;
 
